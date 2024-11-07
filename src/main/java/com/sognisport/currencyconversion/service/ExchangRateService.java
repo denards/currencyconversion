@@ -5,6 +5,7 @@ import com.sognisport.currencyconversion.domain.dto.ConversionRateDTO;
 import com.sognisport.currencyconversion.domain.entity.ExchangeRateResponse;
 import com.sognisport.currencyconversion.exception.ObjectNotFoundException;
 import com.sognisport.currencyconversion.repository.CurrencyConversionRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class ExchangRateService {
 
@@ -33,7 +35,10 @@ public class ExchangRateService {
 
     public ConversionRate getExchangeRate(String fromCurrency, String toCurrency) {
 
+        log.info("Câmbio de moedas entre {} e {}", fromCurrency, toCurrency);
         String url = String.format("https://v6.exchangerate-api.com/v6/%s/pair/%s/%s", apiKey, fromCurrency, toCurrency);
+
+        log.debug("Chamando api externa de câmbio ExchangeAPI {}",url);
         ExchangeRateResponse exchangeRateResponse = restTemplate.getForObject(url, ExchangeRateResponse.class);
         ConversionRate conversionRate = null;
         if (!Objects.isNull(exchangeRateResponse)) {
@@ -49,16 +54,18 @@ public class ExchangRateService {
 
 
     public List<ConversionRate> listAllExcnahgeRates() {
+        log.info("Listando câmbios já realizados no database");
         return currencyConversionRepository.findAll();
     }
 
     public ConversionRate updateConversionRate(ConversionRateDTO conversionRateDTO) {
+        log.info("Atualizando câmbio para o id {}",conversionRateDTO.getId());
         Optional<ConversionRate> op = currencyConversionRepository.findById(conversionRateDTO.getId());
         op.ifPresentOrElse(
                 (conversionRate -> conversionRate.setRate(conversionRateDTO.getRate())),
                 () -> new ObjectNotFoundException("object " + conversionRateDTO.getId() + " not found")
         );
-
+        currencyConversionRepository.save(op.get());
         return op.get();
     }
 }
