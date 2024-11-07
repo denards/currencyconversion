@@ -10,10 +10,6 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc
 public class ExchageRateControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
 
     @Test
     public void whenJsonConverterIsFound_thenReturnResponse() throws Exception {
