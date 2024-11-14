@@ -1,8 +1,9 @@
 package com.sognisport.currencyconversion;
 
-import com.sognisport.currencyconversion.domain.dto.ConversionRate;
 import com.sognisport.currencyconversion.domain.dto.ConversionRateDTO;
+import com.sognisport.currencyconversion.domain.entity.ConversionRate;
 import com.sognisport.currencyconversion.domain.entity.ExchangeRateResponse;
+import com.sognisport.currencyconversion.exception.ObjectNotFoundException;
 import com.sognisport.currencyconversion.repository.CurrencyConversionRepository;
 import com.sognisport.currencyconversion.service.ExchangRateService;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.client.RestTemplate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -46,4 +48,20 @@ public class ExchangeRateServiceTest {
         assertEquals("USD", result.getFromCurrency());
         assertEquals("BRL", result.getToCurrency());
     }
+
+    @Test
+    void updateConversionRate_ShouldThrowExceptionWhenNotFound(){
+        ConversionRateDTO conversionRateDTO = new ConversionRateDTO();
+        conversionRateDTO.setId(1L);
+        conversionRateDTO.setRate(5.5);
+
+        when(currencyConversionRepository.findById(1L)).thenThrow(ObjectNotFoundException.class);
+
+        assertThrows(ObjectNotFoundException.class,
+                ()-> exchangRateService.updateConversionRate(conversionRateDTO)
+                );
+    }
+
+//    @Test
+//    void listAllExchangeRates
 }

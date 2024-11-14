@@ -11,13 +11,14 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Slf4j
 @ControllerAdvice
 public class CurrencyConversionExceptionHandler {
 
-    @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<CurrencyConversionErrorResponse> objectNotFound(ObjectNotFoundException e, WebRequest request) {
+    @ExceptionHandler({ObjectNotFoundException.class, NoSuchElementException.class})
+    public ResponseEntity<CurrencyConversionErrorResponse> objectNotFound(Exception e, WebRequest request) {
         log.error("Objeto Não encontrado: {}", e.getMessage());
         CurrencyConversionErrorResponse currencyConversionErrorResponse = new CurrencyConversionErrorResponse(
                 HttpStatus.NOT_FOUND.value(),
