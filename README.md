@@ -23,8 +23,8 @@ Esta aplicação Spring Boot fornece uma API REST para conversão de moedas, int
 ### Construindo a Aplicação
 ```bash
 # Repositório
-git clone https://github.com/yourusername/currency-converter.git
-cd currency-converter
+git clone https://github.com/yourusername/currencyconversion.git
+cd currencyconversion
 
 # Build da aplicação
 mvn clean package
@@ -33,8 +33,12 @@ mvn clean package
 mvn test
 
 # Execute a aplicação localmente
-java -jar target/currency-converter-1.0.0.jar
-```
+java -jar target/currencyconversion-1.0.0.jar
+
+#Docker
+docker build -t currency-conversion .
+docker run -p 8080:8080 currency-conversion
+
 
 ### Configuração
 Crie o arquivo `application.properties` em `src/main/resources`:

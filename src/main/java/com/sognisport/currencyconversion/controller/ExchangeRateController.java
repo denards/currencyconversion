@@ -1,6 +1,6 @@
 package com.sognisport.currencyconversion.controller;
 
-import com.sognisport.currencyconversion.domain.dto.ConversionRate;
+import com.sognisport.currencyconversion.domain.entity.ConversionRate;
 import com.sognisport.currencyconversion.domain.dto.ConversionRateDTO;
 import com.sognisport.currencyconversion.service.ExchangRateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ExchangeRateController {
 
     @GetMapping("/listexchangerates")
     public List<ConversionRate> listExchangeRates() {
-        return exchangRateService.listAllExcnahgeRates();
+        return exchangRateService.listAllExchangeRates();
     }
 
     @PutMapping("/update")

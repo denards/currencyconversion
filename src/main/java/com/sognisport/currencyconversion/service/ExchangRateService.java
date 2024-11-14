@@ -1,6 +1,6 @@
 package com.sognisport.currencyconversion.service;
 
-import com.sognisport.currencyconversion.domain.dto.ConversionRate;
+import com.sognisport.currencyconversion.domain.entity.ConversionRate;
 import com.sognisport.currencyconversion.domain.dto.ConversionRateDTO;
 import com.sognisport.currencyconversion.domain.entity.ExchangeRateResponse;
 import com.sognisport.currencyconversion.exception.ObjectNotFoundException;
@@ -53,7 +53,7 @@ public class ExchangRateService {
     }
 
 
-    public List<ConversionRate> listAllExcnahgeRates() {
+    public List<ConversionRate> listAllExchangeRates() {
         log.info("Listando câmbios já realizados no database");
         return currencyConversionRepository.findAll();
     }

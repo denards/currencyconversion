@@ -1,11 +1,8 @@
-package com.sognisport.currencyconversion.domain.dto;
+package com.sognisport.currencyconversion.domain.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
+import jakarta.persistence.*;
 import lombok.Data;
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
@@ -20,4 +17,6 @@ public class ConversionRate {
     private String toCurrency;
     private Double rate;
     private LocalDateTime timestamp;
+
+    ;
 }
